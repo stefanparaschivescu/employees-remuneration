@@ -10,8 +10,6 @@
 .Spotlight-V100
 .Trashes
 .idea
-ehthumbs.db
-Thumbs.db
-server/app/config/db.config.js
-server/node_modules
-server/package-lock.json
+app/config/db.config.js
+node_modules
+package-lock.json
