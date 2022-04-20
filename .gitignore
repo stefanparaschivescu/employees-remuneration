@@ -1,0 +1,16 @@
+# Logs and databases #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+server/app/config/db.config.js
+server/node_modules
+server/package-lock.json
