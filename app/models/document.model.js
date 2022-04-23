@@ -1,4 +1,5 @@
-const {ObjectId} = require("mongodb");
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
@@ -16,5 +17,5 @@ module.exports = (mongoose) => {
         return object;
     });
 
-    return mongoose.model("documents", schema);
+    return mongoose.model("document", schema);
 };

@@ -14,5 +14,5 @@ module.exports = (mongoose) => {
         return object;
     });
 
-    return mongoose.model("payments", schema);
+    return mongoose.model("payment", schema);
 };

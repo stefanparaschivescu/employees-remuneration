@@ -1,4 +1,5 @@
-const {ObjectId} = require("mongodb");
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
@@ -6,9 +7,21 @@ module.exports = (mongoose) => {
             CompanyId: ObjectId,
             FirstName: String,
             LastName: String,
-            Salary: Number,
+            DateOfBirth: Date,
+            PhoneNumber: String,
+            Gender: Boolean,
+            Address: String,
+            Married: Boolean,
+            InternalNumber: Number,
             EmailAddress: String,
             EncryptedPassword: String,
+            roles: [
+                {
+                    type: ObjectId,
+                    ref: "role"
+                }
+            ],
+            Salary: Number,
             FunctionId: ObjectId
         },
         {timestamps: true}
@@ -20,5 +33,5 @@ module.exports = (mongoose) => {
         return object;
     });
 
-    return mongoose.model("employees", schema);
+    return mongoose.model("employee", schema);
 };
