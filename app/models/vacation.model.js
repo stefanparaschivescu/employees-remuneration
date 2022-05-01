@@ -1,9 +1,9 @@
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
-            Days: Number,
-            StartingDate: Date,
-            VacationType: String
+            days: Number,
+            startingDate: Date,
+            vacationType: String
         },
         {timestamps: true}
     );

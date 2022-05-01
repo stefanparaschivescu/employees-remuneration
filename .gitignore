@@ -10,6 +10,6 @@
 .Spotlight-V100
 .Trashes
 .idea
-app/config/db.config.js
+app/config
 node_modules
 package-lock.json

@@ -1,9 +1,9 @@
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
-            BankName: String,
+            bankName: String,
             IBAN: String,
-            ReceiptNo: Number
+            receiptNo: Number
         },
         {timestamps: true}
     );

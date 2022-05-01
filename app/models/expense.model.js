@@ -4,10 +4,10 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
-            PaymentId: ObjectId,
-            CompanyId: ObjectId,
-            Description: String,
-            Amount: Number
+            paymentId: ObjectId,
+            companyId: ObjectId,
+            description: String,
+            amount: Number
         },
         {timestamps: true}
     );

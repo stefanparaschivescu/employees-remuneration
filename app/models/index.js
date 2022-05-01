@@ -9,11 +9,13 @@ db.url = dbConfig.url;
 db.benefit = require("./benefit.model")(mongoose);
 db.company = require("./company.model")(mongoose);
 db.document = require("./document.model")(mongoose);
-db.employee = require("./employee.model")(mongoose);
+db.user = require("./user.model")(mongoose);
 db.expense = require("./expense.model")(mongoose);
 db.function = require("./function.model")(mongoose);
 db.payment = require("./payment.model")(mongoose);
 db.request = require("./request.model")(mongoose);
 db.vacation = require("./vacation.model")(mongoose);
+db.role = require("./role.model")(mongoose);
+db.ROLES = ["user", "admin"];
 
 module.exports = db;

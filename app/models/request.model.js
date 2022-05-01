@@ -4,10 +4,10 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
-            AdministratorId: ObjectId,
-            EmployeeId: ObjectId,
-            VacationId: ObjectId,
-            BenefitId: ObjectId
+            administratorId: ObjectId,
+            employeeId: ObjectId,
+            vacationId: ObjectId,
+            benefitId: ObjectId
         },
         {timestamps: true}
     );

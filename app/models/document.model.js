@@ -4,9 +4,9 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
-            RequestId: ObjectId,
-            Name: String,
-            SignatureReference: String
+            requestId: ObjectId,
+            name: String,
+            signatureReference: String
         },
         {timestamps: true}
     );
