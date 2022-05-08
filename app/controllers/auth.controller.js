@@ -42,22 +42,9 @@ exports.signUp = (req, res) => {
                 }
             );
         } else {
-            Role.findOne({name: "user"}, (err, role) => {
-                if (err) {
-                    res.status(500).send({message: err});
-                    return;
-                }
-
-                user.roles = [role.id];
-                user.save(err => {
-                    if (err) {
-                        res.status(500).send({message: err});
-                        return;
-                    }
-
-                    res.send({message: "User was registered successfully!"});
-                });
-            });
+            res.status(404).send({
+                message: "User must be associated with a role."
+            })
         }
     });
 };

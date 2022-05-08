@@ -10,6 +10,7 @@ module.exports = function(app) {
         next();
     });
 
+    router.post("/employee", users.createEmployee);
     router.get("/", users.findUsers);
     router.get("/id/:id", users.findUserById);
     router.put("/id/:id", users.updateUser);
