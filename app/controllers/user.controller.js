@@ -83,7 +83,10 @@ exports.findUserById = (req, res) => {
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found User with id " + id});
-            else res.send(data);
+            else {
+                data.passwordToken = undefined;
+                res.send(data);
+            }
         })
         .catch(() => {
             res

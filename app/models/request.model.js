@@ -4,10 +4,12 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
-            administratorId: ObjectId,
-            employeeId: ObjectId,
-            vacationId: ObjectId,
-            benefitId: ObjectId
+            administratorId: {type: ObjectId, ref: "user"},
+            employeeId: {type: ObjectId, ref: "user"},
+            vacationId: {type: ObjectId, ref: "vacation"},
+            benefitId: {type: ObjectId, ref: "benefit"},
+            accepted: Boolean,
+            message: String
         },
         {timestamps: true}
     );
