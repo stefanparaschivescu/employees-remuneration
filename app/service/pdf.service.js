@@ -1,6 +1,6 @@
 const PDFDocument = require("pdfkit");
 
-function buildPDF(dataCallback, endCallback) {
+function buildPDF(dataCallback, endCallback, user, date, days, values) {
     // Create a document
     const doc = new PDFDocument();
 
@@ -9,39 +9,67 @@ function buildPDF(dataCallback, endCallback) {
 
 // Embed a font, set the font size, and render some text
     doc
-        .fontSize(25)
-        .text('Some text with an embedded font!', 100, 100);
+        .font("Helvetica-Bold")
+        .fontSize(10)
+        .text("Internal number:   " + user.internalNumber, 240, 30)
+        .text("First and Last name:   " + user.lastName + " " + user.firstName, 220, 45)
+        .text("Company name:   " + user.companyId.name, 240, 60)
+        .text("Address:   " + user.companyId.address, 275, 75);
 
-
-// Add another page
     doc
-        .addPage()
-        .fontSize(25)
-        .text('Here is some vector graphics...', 100, 100);
+        .font("Helvetica-Bold")
+        .fontSize(10)
+        .text(date, 110, 150)
+        .text("Hours", 300, 150)
+        .text("Days", 350, 150)
+        .text("Values (RON)", 450, 150)
 
-// Draw a triangle
     doc
-        .save()
-        .moveTo(100, 150)
-        .lineTo(100, 250)
-        .lineTo(200, 250)
-        .fill('#FF3300');
+        .font("Helvetica")
+        .fontSize(9)
+        .text(days, 360, 190)
 
-// Apply some transforms and render an SVG path with the 'even-odd' fill rule
     doc
-        .scale(0.6)
-        .translate(470, -380)
-        .path('M 250,75 L 323,301 131,161 369,161 177,301 z')
-        .fill('red', 'even-odd')
-        .restore();
+        .font("Helvetica-Bold")
+        .fontSize(9)
+        .text("Salariu brut incadrare", 110, 175)
+        .text(values.grossSalary, 470, 175);
 
-// Add some text with annotations
     doc
-        .addPage()
-        .fillColor('blue')
-        .text('Here is a link!', 100, 100)
-        .underline(100, 100, 160, 27, {color: '#0000FF'})
-        .link(100, 100, 160, 27, 'http://google.com/');
+        .font("Helvetica")
+        .fontSize(9)
+        .text("Salariu brut efectiv lucrat", 110, 190)
+        .text(values.grossSalary, 470, 190)
+        .text("Prima evaluare", 110, 205)
+        .text(0, 470, 205)
+        .text("Brut tichete de masa", 110, 220)
+        .text(values.ticketsValue, 470, 220);
+
+    doc
+        .font("Helvetica-Bold")
+        .fontSize(9)
+        .text("Total brut", 110, 238)
+        .text(values.grossSalary, 470, 238);
+
+    doc
+        .font("Helvetica")
+        .fontSize(9)
+        .text("Asigurare de sanatate (CASS) - 10%", 110, 255)
+        .text(values.cass, 470, 255)
+        .text("CAS - 25%", 110, 270)
+        .text(values.cas, 470, 270)
+        .text("Baza pentru impozitare", 110, 285)
+        .text(values.taxBases, 470, 285)
+        .text("Impozit", 110, 300)
+        .text(values.taxes, 470, 300);
+
+    doc
+        .font("Helvetica-Bold")
+        .fontSize(9)
+        .text("Salariu net realizat", 110, 315)
+        .text(values.netSalary, 470, 315);
+
+
 
 // Finalize PDF file
     doc.end();

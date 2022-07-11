@@ -16,7 +16,11 @@ module.exports = (mongoose) => {
             emailAddress: String,
             passwordToken: String,
             role: {type: ObjectId, ref: "role"},
-            salary: Number,
+            grossSalary: Number,
+            netSalary: Number,
+            mealTicketValue: Number,
+            taxExempt: Boolean,
+            IBAN: String,
             functionId: ObjectId
         },
         {timestamps: true}

@@ -1,8 +1,8 @@
-const pdf = require("../controllers/pdf.controller");
+const csv = require("../controllers/csv.controller");
 const router = require("express").Router();
 
 module.exports = function (app) {
-    app.use(function(req, res, next) {
+    app.use(function (req, res, next) {
         res.header(
             "Access-Control-Allow-Headers",
             "x-access-token, Origin, Content-Type, Accept"
@@ -10,7 +10,7 @@ module.exports = function (app) {
         next();
     });
 
-    router.get("/payslip/:employeeId/:date", pdf.sendPdf);
+    router.get("/bankReport/:sourceAccountNumber/:paymentRef1/:urgent/:date", csv.download);
 
-    app.use("/api/pdf/", router);
+    app.use("/api/csv", router);
 }

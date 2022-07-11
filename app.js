@@ -42,7 +42,9 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/company.routes")(app);
 require("./app/routes/request.routes")(app);
 require("./app/routes/vacation.routes")(app);
+require("./app/routes/benefit.routes")(app);
 require("./app/routes/pdf.routes")(app);
+require("./app/routes/csv.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;

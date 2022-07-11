@@ -9,7 +9,8 @@ exports.createRequest = (req, res) => {
 
     const request = new Request({
         employeeId: req.body.employeeId,
-        accepted: "false"
+        accepted: "false",
+        message: ""
     });
 
     if (req.body.hasOwnProperty("administratorId")) request.administratorId = req.body.administratorId;
@@ -61,6 +62,38 @@ exports.findVacations = (req, res) => {
             });
         });
 };
+
+exports.findBenefits = (req, res) => {
+    Request.where("benefitId").ne(null)
+        .populate("employeeId", "-__v")
+        .populate("benefitId", "-__v")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving benefits."
+            });
+        });
+};
+
+exports.findBenefitsByUserId = (req, res) => {
+    const id = req.params.id;
+
+    Request.where("benefitId").ne(null)
+        .where("employeeId").equals(id)
+        .populate("benefitId", "--v")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving vacations."
+            });
+        });
+}
 
 exports.findRequestById = (req, res) => {
     const id = req.params.id;

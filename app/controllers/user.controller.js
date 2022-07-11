@@ -3,6 +3,18 @@ const bcrypt = require("bcryptjs");
 const User = db.user;
 const Role = db.role;
 
+const calculateNetSalary = (grossSalary, payTax) => {
+    let cas = Math.round(0.25 * grossSalary);
+    let cass = Math.round(0.1 * grossSalary);
+    let taxes = Math.round(0.1 * (grossSalary - cas - cass));
+
+    if (!payTax) {
+        taxes = 0;
+    }
+
+    return Math.round(grossSalary - cas - cass - taxes);
+}
+
 exports.createEmployee = (req, res) => {
     if (!req.body.companyId && !req.body.email && !req.body.passwordToken && !req.body.role) {
         res.status(400).send({message: "Employee must be associated with a company, have an email and a password."});
@@ -35,8 +47,11 @@ exports.createEmployee = (req, res) => {
     if (req.body.hasOwnProperty("address")) user.address = req.body.address;
     if (req.body.hasOwnProperty("married")) user.married = (req.body.married === "true");
     if (req.body.hasOwnProperty("internalNumber")) user.internalNumber = req.body.internalNumber;
-    if (req.body.hasOwnProperty("salary")) user.salary = req.body.salary;
-
+    if (req.body.hasOwnProperty("grossSalary")) user.grossSalary = req.body.grossSalary;
+    if (req.body.hasOwnProperty("mealTicketValue")) user.mealTicketValue = req.body.mealTicketValue;
+    if (req.body.hasOwnProperty("IBAN")) user.IBAN = req.body.IBAN.toUpperCase();
+    req.body.hasOwnProperty("taxExempt") ? user.taxExempt = (req.body.taxExempt === "true") : user.taxExempt = false;
+    user.netSalary = calculateNetSalary(user.grossSalary, !user.taxExempt);
 
     user.save(user).then(data => {
         res.send(data);
@@ -60,7 +75,11 @@ exports.findUsers = (req, res) => {
     if (query.hasOwnProperty("address")) query["address"] = query.address;
     if (query.hasOwnProperty("married")) query["married"] = (query.married === "true");
     if (query.hasOwnProperty("internalNumber")) query["internalNumber"] = query.internalNumber;
-    if (query.hasOwnProperty("salary")) query["salary"] = query.salary;
+    if (query.hasOwnProperty("grossSalary")) query["grossSalary"] = query.grossSalary;
+    if (query.hasOwnProperty("netSalary")) query["netSalary"] = query.netSalary;
+    if (query.hasOwnProperty("mealTicketValue")) query["mealTicketValue"] = query.mealTicketValue;
+    if (query.hasOwnProperty("IBAN")) query["IBAN"] = query.IBAN;
+    if (query.hasOwnProperty("taxExempt")) query["taxExempt"] = (query.taxExempt === "true");
 
     User.find(query)
         .populate("companyId", "-__v")
@@ -102,7 +121,11 @@ exports.updateUser = (req, res) => {
         });
     }
 
+    req.body.grossSalary && (req.body.netSalary = calculateNetSalary(req.body.grossSalary, !req.body.taxExempt));
+    req.body.IBAN && (req.body.IBAN = req.body.IBAN.toUpperCase());
+
     const id = req.params.id;
+
 
     User.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
         .then(data => {

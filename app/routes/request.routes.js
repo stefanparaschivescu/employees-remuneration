@@ -13,6 +13,8 @@ module.exports = function (app) {
     router.post("/", requests.createRequest);
     router.get("/", requests.findRequests);
     router.get("/vacations", requests.findVacations);
+    router.get("/benefits", requests.findBenefits);
+    router.get("/benefitsByUserId/:id", requests.findBenefitsByUserId);
     router.get("/id/:id", requests.findRequestById);
     router.put("/id/:id", requests.updateRequest);
     router.delete("/id/:id", requests.deleteRequest);
