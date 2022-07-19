@@ -4,10 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
-            employeeId: ObjectId,
             name: String,
-            minimumSalary: Number,
-            maximumSalary: Number
         },
         {timestamps: true}
     );

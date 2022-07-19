@@ -21,7 +21,9 @@ module.exports = (mongoose) => {
             mealTicketValue: Number,
             taxExempt: Boolean,
             IBAN: String,
-            functionId: ObjectId
+            BIC: String,
+            vacationDays: Number,
+            functionId: {type: ObjectId, ref: "function"}
         },
         {timestamps: true}
     );

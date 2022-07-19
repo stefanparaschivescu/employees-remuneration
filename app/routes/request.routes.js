@@ -15,6 +15,7 @@ module.exports = function (app) {
     router.get("/vacations", requests.findVacations);
     router.get("/benefits", requests.findBenefits);
     router.get("/benefitsByUserId/:id", requests.findBenefitsByUserId);
+    router.get("/vacationsByUserId/:id", requests.findVacationsByUserId);
     router.get("/id/:id", requests.findRequestById);
     router.put("/id/:id", requests.updateRequest);
     router.delete("/id/:id", requests.deleteRequest);

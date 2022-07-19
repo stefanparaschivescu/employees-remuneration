@@ -82,8 +82,11 @@ exports.signIn = (req, res) => {
                 id: user.id,
                 companyId: user.companyId,
                 emailAddress: user.emailAddress,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 role: user.role,
-                accessToken: token
+                accessToken: token,
+                vacationDays: user.vacationDays
             });
         });
 };

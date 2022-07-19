@@ -12,6 +12,8 @@ module.exports = function(app) {
 
     router.post("/employee", users.createEmployee);
     router.get("/", users.findUsers);
+    router.get("/salaries", users.retrieveUsersGrossSalaries);
+    router.get("/seniority", users.retrieveUsersSeniority);
     router.get("/id/:id", users.findUserById);
     router.put("/id/:id", users.updateUser);
     router.delete("/id/:id", users.deleteUser);

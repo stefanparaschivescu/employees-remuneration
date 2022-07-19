@@ -1,4 +1,4 @@
-function calculateNetSalary (salary, type, ticketsNumber, ticketValue, payTax) {
+function calculateNetSalary (salary, type, ticketsNumber, ticketValue, taxExempt) {
     salary = parseInt(salary);
     ticketsNumber = parseInt(ticketsNumber !== "" ? ticketsNumber : "0");
     ticketValue = parseInt(ticketValue !== "" ? ticketValue : "0");
@@ -16,12 +16,12 @@ function calculateNetSalary (salary, type, ticketsNumber, ticketValue, payTax) {
     const cass = Math.round(0.1 * salary);
     let taxes = Math.round(0.1 * (salary + ticketsValue - cas - cass));
 
-    if (!payTax) {
+    if (taxExempt) {
         taxes = 0;
     }
 
-    const taxBase = salary + ticketsValue - cas - cass;
-    const netSalary = taxBase - taxes;
+    const taxBases = salary + ticketsValue - cas - cass;
+    const netSalary = taxBases - taxes;
 
     return {
         netSalary: netSalary,
@@ -30,7 +30,7 @@ function calculateNetSalary (salary, type, ticketsNumber, ticketValue, payTax) {
         taxes: taxes,
         ticketsValue: ticketsValue,
         grossSalary: salary,
-        taxBases: taxBase
+        taxBases: taxBases
     };
 }
 

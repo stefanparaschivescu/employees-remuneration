@@ -12,7 +12,7 @@ function buildPDF(dataCallback, endCallback, user, date, days, values) {
         .font("Helvetica-Bold")
         .fontSize(10)
         .text("Internal number:   " + user.internalNumber, 240, 30)
-        .text("First and Last name:   " + user.lastName + " " + user.firstName, 220, 45)
+        .text("First and Last name:   " + user.firstName + " " + user.lastName, 220, 45)
         .text("Company name:   " + user.companyId.name, 240, 60)
         .text("Address:   " + user.companyId.address, 275, 75);
 

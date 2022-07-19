@@ -43,6 +43,7 @@ require("./app/routes/company.routes")(app);
 require("./app/routes/request.routes")(app);
 require("./app/routes/vacation.routes")(app);
 require("./app/routes/benefit.routes")(app);
+require("./app/routes/function.routes")(app);
 require("./app/routes/pdf.routes")(app);
 require("./app/routes/csv.routes")(app);
 

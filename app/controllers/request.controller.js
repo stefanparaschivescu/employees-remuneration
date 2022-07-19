@@ -78,6 +78,23 @@ exports.findBenefits = (req, res) => {
         });
 };
 
+exports.findVacationsByUserId = (req, res) => {
+    const id = req.params.id;
+
+    Request.where("vacationId").ne(null)
+        .where("employeeId").equals(id)
+        .populate("vacationId", "--v")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving vacations."
+            });
+        });
+}
+
 exports.findBenefitsByUserId = (req, res) => {
     const id = req.params.id;
 
@@ -90,7 +107,7 @@ exports.findBenefitsByUserId = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving vacations."
+                    err.message || "Some error occurred while retrieving benefits."
             });
         });
 }

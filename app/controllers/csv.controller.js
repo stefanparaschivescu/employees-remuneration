@@ -45,7 +45,7 @@ exports.download = (req, res) => {
         },
         {
             label: 'ValueDate',
-            value: 'test'
+            value: 'valueDate'
         },
         {
             label: 'Urgent',
@@ -54,8 +54,8 @@ exports.download = (req, res) => {
     ];
 
     function handleData(monthYear, user, vacations) {
-        const month = monthYear.split("-")[0];
-        const year = monthYear.split("-")[1];
+        const year = monthYear.split("-")[0];
+        const month = monthYear.split("-")[1];
 
         return actualSalary.calculateActualSalary(month, year, user, vacations);
     }
@@ -100,12 +100,12 @@ exports.download = (req, res) => {
                         sourceAccountNumber: req.params.sourceAccountNumber,
                         targetAccountNumber: employees[i].IBAN,
                         beneficiaryName: employees[i].lastName + " " + employees[i].firstName,
-                        beneficiaryBankBIC: employees[i].beneficiaryBankBIC,
+                        beneficiaryBankBIC: employees[i].BIC,
                         beneficiaryFiscalCode: undefined,
                         amount: result.values.netSalary,
                         paymentRef1: req.params.paymentRef1,
                         paymentRef2: req.query.hasOwnProperty("paymentRef2") ? req.query.paymentRef2 : "-",
-                        test: new Date(date[0], date[1], date[2]).toLocaleDateString(),
+                        valueDate: new Date(date[0], date[1], date[2]).toLocaleDateString(),
                         urgent: req.params.urgent === "true" ? "T" : "F"
                     }
                 );

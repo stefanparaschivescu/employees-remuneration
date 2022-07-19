@@ -5,8 +5,8 @@ const Request = db.request;
 const User = db.user;
 
 function getMonthYear(monthYear) {
-    const month = parseInt(monthYear.split("-")[0]);
-    const year = parseInt(monthYear.split("-")[1]);
+    const month = parseInt(monthYear.split("-")[1]);
+    const year = parseInt(monthYear.split("-")[0]);
 
     switch (month) {
         case 1:
@@ -39,8 +39,8 @@ function getMonthYear(monthYear) {
 }
 
 function handleData(stream, monthYear, user, vacations) {
-    const month = monthYear.split("-")[0];
-    const year = monthYear.split("-")[1];
+    const year = monthYear.split("-")[0];
+    const month = monthYear.split("-")[1];
 
     const object =  actualSalary.calculateActualSalary(month, year, user, vacations);
 

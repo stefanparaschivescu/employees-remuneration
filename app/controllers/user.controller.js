@@ -35,7 +35,8 @@ exports.createEmployee = (req, res) => {
             companyId: req.body.companyId,
             emailAddress: req.body.emailAddress,
             passwordToken: bcrypt.hashSync(req.body.passwordToken, 8),
-            role: "626417b1d8ab6df47b5f8a69"
+            vacationDays: 21,
+            role: "62d04dced53bf909bc25fbad"
         }
     );
 
@@ -50,7 +51,9 @@ exports.createEmployee = (req, res) => {
     if (req.body.hasOwnProperty("grossSalary")) user.grossSalary = req.body.grossSalary;
     if (req.body.hasOwnProperty("mealTicketValue")) user.mealTicketValue = req.body.mealTicketValue;
     if (req.body.hasOwnProperty("IBAN")) user.IBAN = req.body.IBAN.toUpperCase();
-    req.body.hasOwnProperty("taxExempt") ? user.taxExempt = (req.body.taxExempt === "true") : user.taxExempt = false;
+    if (req.body.hasOwnProperty("BIC")) user.BIC = req.body.BIC.toUpperCase();
+    if (req.body.hasOwnProperty("vacationDays")) user.vacationDays = req.body.vacationDays;
+    req.body.hasOwnProperty("taxExempt") ? user.taxExempt = (req.body.taxExempt === true) : user.taxExempt = false;
     user.netSalary = calculateNetSalary(user.grossSalary, !user.taxExempt);
 
     user.save(user).then(data => {
@@ -79,10 +82,13 @@ exports.findUsers = (req, res) => {
     if (query.hasOwnProperty("netSalary")) query["netSalary"] = query.netSalary;
     if (query.hasOwnProperty("mealTicketValue")) query["mealTicketValue"] = query.mealTicketValue;
     if (query.hasOwnProperty("IBAN")) query["IBAN"] = query.IBAN;
+    if (query.hasOwnProperty("BIC")) query["BIC"] = query.BIC;
+    if (query.hasOwnProperty("vacationDays")) query["vacationDays"] = query.vacationDays;
     if (query.hasOwnProperty("taxExempt")) query["taxExempt"] = (query.taxExempt === "true");
 
     User.find(query)
         .populate("companyId", "-__v")
+        .populate("functionId", "-__v")
         .then(data => {
             res.send(data);
         })
@@ -94,11 +100,38 @@ exports.findUsers = (req, res) => {
         });
 };
 
+exports.retrieveUsersGrossSalaries = (req, res) => {
+    User.find({}, "grossSalary")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving users."
+            });
+        });
+}
+
+exports.retrieveUsersSeniority = (req, res) => {
+    User.find({}, "createdAt")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving users."
+            });
+        });
+}
+
 exports.findUserById = (req, res) => {
     const id = req.params.id;
 
     User.findById(id)
         .populate("companyId", "-__v")
+        .populate("functionId", "--v")
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found User with id " + id});
@@ -123,9 +156,9 @@ exports.updateUser = (req, res) => {
 
     req.body.grossSalary && (req.body.netSalary = calculateNetSalary(req.body.grossSalary, !req.body.taxExempt));
     req.body.IBAN && (req.body.IBAN = req.body.IBAN.toUpperCase());
+    req.body.BIC && (req.body.BIC = req.body.BIC.toUpperCase());
 
     const id = req.params.id;
-
 
     User.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
         .then(data => {
